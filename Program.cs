@@ -281,7 +281,11 @@ class Program
 
 
             Statistics.level++;
-            openShop();
+            if (Statistics.health > 0)
+            {
+                openShop();
+            }
+            
         }
 
 
