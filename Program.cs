@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 
 class Program
@@ -11,6 +12,8 @@ class Program
         public static int level = 1;
         public static int health = 50;
         public static int strength = 10;
+        public static int gold = 100;
+        public static List<string> inventory = new List<string>();
 
         public static void printOut()
         {
@@ -19,59 +22,80 @@ class Program
             Console.WriteLine("Level: " + level);
             Console.WriteLine("Životy: " + health);
             Console.WriteLine("Síla: " + strength);
+            Console.WriteLine("Gold: " + gold);
+            Console.WriteLine("Inventory:");
+
+            if (inventory.Count < 1)
+            {
+                Console.WriteLine("Nemas nic v inventari.");
+            }
+            else
+            {
+                foreach (string item in inventory)
+                {
+                    Console.WriteLine(item);
+                }
+            }
+
         }
     }
 
     static void Main()
     {
+        bool verified = userVerification();
+        if (verified)
+        {
+            welcoming();
+            gameLoop();
+            openShop();
+            Statistics.printOut();
 
-        userVerification();
-        welcoming();
-        gameLoop();
+        }
+        else
+        {
+            Console.WriteLine("Uživatel nebyl nalezen nebo špatné heslo.");
+        }
 
 
-        Statistics.printOut();
+
+
 
     }
 
-    static void userVerification()
+    static bool userVerification()
     {
         List<string> usernames = new List<string> { "Alice", "Bob", "Petr" };
         List<string> passwords = new List<string> { "pass1", "pass2", "pass3" };
         Console.Write("Zadej username: ");
-        string username = Console.ReadLine();
+        string inputUsername = Console.ReadLine();
 
         Console.Write("Zadej heslo: ");
-        string password = Console.ReadLine();
+        string inputPassword = Console.ReadLine();
 
         bool found = false;
         int index = 0;
 
-        foreach (string username1 in usernames)
+        foreach (string username in usernames)
         {
-            if (username1 == username)
+            if (username == inputUsername)
             {
-                if (passwords[index] == password)
+                if (passwords[index] == inputPassword)
                 {
                     Console.WriteLine("Success!");
+                    found = true;
+                    Statistics.jmeno = inputUsername;
                 }
                 else
                 {
                     Console.WriteLine("Fail!");
                 }
-                found = true;
-                Statistics.jmeno = username;
+
                 break; // stop searching after match
             }
             index++;
         }
 
-        if (!found)
-        {
-            Console.WriteLine("Username not found!");
-            return;
-
-        }
+        return found;
     }
 
     static void welcoming()
@@ -88,7 +112,10 @@ class Program
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        //naše hra
+
+        //tady dejte vasi cast
+
+
         Statistics.level++;
 
         stopwatch.Stop();
@@ -97,21 +124,20 @@ class Program
 
     static void openShop()
     {
-        int gold = 100;
 
         List<string> shop = new List<string>()
-{
-"1. Sword: 30 gold",
-"2. Shield: 20 gold",
-"3. Armour: 10 gold"
-};
+            {
+            "1. Sword: 30 gold",
+            "2. Shield: 20 gold",
+            "3. Armour: 10 gold"
+            };
 
         Console.WriteLine("Chceš otevřít shop? ano/ne");
         string answer = Console.ReadLine();
 
         if (answer == "ano")
         {
-            Console.WriteLine("Máš" + gold + "gold.");
+            Console.WriteLine("Máš" + Statistics.gold + "gold.");
             Console.WriteLine("Shop items:");
             foreach (string item in shop)
             {
@@ -123,10 +149,11 @@ class Program
 
             if (choice == "1")
             {
-                if (gold >= 30)
+                if (Statistics.gold >= 30)
                 {
-                    gold -= 30;
-                    Console.WriteLine("Koupil jsi Sword! Zbylo ti " + gold + " gold.");
+                    Statistics.gold -= 30;
+                    Console.WriteLine("Koupil jsi Sword! Zbylo ti " + Statistics.gold + " gold.");
+                    Statistics.inventory.Add("Sword");
                 }
                 else
                 {
@@ -135,10 +162,11 @@ class Program
             }
             else if (choice == "2")
             {
-                if (gold >= 20)
+                if (Statistics.gold >= 20)
                 {
-                    gold -= 20;
-                    Console.WriteLine("Koupil jsi Shield! Zbylo ti " + gold + " gold.");
+                    Statistics.gold -= 20;
+                    Console.WriteLine("Koupil jsi Shield! Zbylo ti " + Statistics.gold + " gold.");
+                    Statistics.inventory.Add("Sheild");
                 }
                 else
                 {
@@ -147,10 +175,11 @@ class Program
             }
             else if (choice == "3")
             {
-                if (gold >= 10)
+                if (Statistics.gold >= 10)
                 {
-                    gold -= 10;
-                    Console.WriteLine("Koupil jsi Armour! Zbylo ti " + gold + " gold.");
+                    Statistics.gold -= 10;
+                    Console.WriteLine("Koupil jsi Armour! Zbylo ti " + Statistics.gold + " gold.");
+                    Statistics.inventory.Add("Armour");
                 }
                 else
                 {
@@ -176,7 +205,7 @@ class Program
 
         if (op == "ano")
         {
-System.Console.WriteLine("ahoj");
+            openShop();
         }
     }
 
