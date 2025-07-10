@@ -107,7 +107,172 @@ class Program
         stopwatch.Start();
 
 
-        //tady dejte vasi cast
+        // promenne
+ int vybranyUtok;
+ int damage;
+ int vysledek1;
+ int vysledek2;
+ int vysledek3;
+ int vysledek4;
+ string vstup;
+ int odpoved;
+ int enemyHP = 10;
+ int enemyDMG = 0;
+ int kolo = 0;
+ int enemyDmgEXTRA;
+ int HitChance;
+ 
+
+
+// boj
+
+    while (zivoty > 0)
+    {   
+        kolo++;
+        enemyDMG= enemyDMG+(10*kolo);
+        Random enemyHPplus = new Random ();
+        enemyHP = enemyHP + enemyHPplus.Next(1, 31);
+        while (enemyHP > 0 && zivoty > 0)
+        {
+            
+            
+            Console.WriteLine("zivoty nepritele: " + enemyHP);
+            Console.WriteLine("kolo: " + kolo);
+            Console.WriteLine("vyber utok, 1 - slaby utok (scitani), 2 - slaby utok (odcitani), 3 - silny utok (nasobeni), 4 - silny utok (deleni)");
+            vybranyUtok = int.Parse (Console.ReadLine());
+
+            Random rnd1 = new Random ();
+            int y = rnd1.Next(1, 100);
+            Random rnd2 = new Random ();
+            int x = rnd2.Next(1, 100);
+            Random rnd3 = new Random ();
+            int z = rnd3.Next(1, 10);
+
+
+            switch (vybranyUtok)
+            {
+                case 1:
+                    
+                    Console.WriteLine("vybral jsi slaby utok (scitani)");
+                    Console.WriteLine($"vypocitej priklad: {y} + {x} =");
+                    vstup = Console.ReadLine();
+                    odpoved = int.Parse(vstup); 
+                    vysledek1 = x + y;
+                    if(vysledek1 == odpoved)
+                    {
+                        Random rndDMG = new Random ();
+                        damage = rndDMG.Next(5, 11);
+                        Console.WriteLine("uderil jsi damage " + damage);
+                        enemyHP = enemyHP - damage;
+                        Console.WriteLine("Zivoty nepritel " + enemyHP);
+                    }
+                    else
+                    {
+                        Console.WriteLine("minul jsi, správný výsledek je " + vysledek1);
+                    }
+                    break;
+                case 2:
+                    
+                    Console.WriteLine("vybral jsi slaby utok (odcitani)");
+                    Console.WriteLine($"vypocitej priklad: {y} - {x} =");
+                    vstup = Console.ReadLine();
+                    odpoved = int.Parse(vstup); 
+                    vysledek2 = y - x;
+                    if(vysledek2 == odpoved)
+                    {
+                        Random rndDMG = new Random ();
+                        damage = rndDMG.Next(5, 11);
+                        Console.WriteLine("uderil jsi damage " + damage);
+                        enemyHP = enemyHP - damage;
+                        Console.WriteLine("Zivoty nepritel " + enemyHP);
+                    }
+                    else
+                    {
+                        Console.WriteLine("minul jsi, správný výsledek je " + vysledek2);
+                    }
+                    break;
+                case 3:
+                    
+                    Console.WriteLine("vybral jsi silny utok(nasobeni)");
+                    Console.WriteLine($"vypocitej priklad: {y} * {x} =");
+                    vstup = Console.ReadLine();
+                    odpoved = int.Parse(vstup); 
+                    vysledek3 = x * y;
+                    if(vysledek3 == odpoved)
+                    {
+                        Random rndDMG = new Random ();
+                        damage = rndDMG.Next(10, 21);
+                        Console.WriteLine("uderil jsi damage " + damage);
+                        enemyHP = enemyHP - damage;
+                        Console.WriteLine("Zivoty nepritel " + enemyHP);
+                    }
+                    else
+                    {
+                        Console.WriteLine("minul jsi, správný výsledek je " + vysledek3;
+                    }
+                    break;
+                    case 4:
+                    
+                    Console.WriteLine("vybral jsi silny utok(deleni)");
+                    Console.WriteLine($"vypocitej priklad: {y} / {z} =");
+                    vstup = Console.ReadLine();
+                    odpoved = int.Parse(vstup); 
+                    vysledek4 = y / z;
+                    if(vysledek4 == odpoved)
+                    {
+                        Random rndDMG = new Random ();
+                        damage = rndDMG.Next(5, 11);
+                        Console.WriteLine("uderil jsi damage " + damage);
+                        enemyHP = enemyHP - damage;
+                        Console.WriteLine("Zivoty nepritel " + enemyHP);
+                    }
+                    else
+                    {
+                        Console.WriteLine("minul jsi, správný výsledek je " + vysledek4);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("INVALID");
+                    break;
+            }
+            if(enemyHP > 0)
+            {
+                Random rndHit = new Random ();
+                HitChance = rndHit.Next(0, 101);
+                if(HitChance <= 70)
+                {
+                    Random rndeDMG = new Random ();
+                    enemyDmgEXTRA = rndeDMG.Next(5, 16);
+                    enemyDMG = enemyDMG + enemyDmgEXTRA;
+                    health = health - enemyDMG;
+                    Console.WriteLine("nepritel ti ubral " + enemyDMG + "zivotu");
+                    Console.WriteLine("zbyva ti " + health + "zivotu");
+                }
+                else
+                {
+                    Console.WriteLine("nepritel minul");
+                }
+            }
+            else
+            {
+                Console.WriteLine("nepritel zemrel");
+            }
+           
+
+            
+
+            
+
+
+        }
+
+
+        
+
+
+
+
+    }
 
 
         Statistics.level++;     //toto dejte u kazdyho levelu
