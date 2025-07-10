@@ -95,7 +95,7 @@ class Program
     static void welcoming()
     {
         Console.WriteLine("Vítej!");
-        Console.WriteLine("Toto je bojovací hra.");
+        Console.WriteLine("Toto je bojová hra.");
         Console.WriteLine("Začínáš s 100 hp, až ti dojde hp, končí hra. ");
         Console.WriteLine("Postupně budeš procházek levelama.");
         Console.WriteLine("Hodně štěstí!");
@@ -113,7 +113,7 @@ class Program
         Statistics.level++;     //toto dejte u kazdyho levelu
 
         stopwatch.Stop();
-        Console.WriteLine("Dokoncil jsi " + Statistics.level + " levlu v " + stopwatch.Elapsed.TotalSeconds + " vterin.");
+        Console.WriteLine("Dokoncil jsi " + Statistics.level + " levly v " + stopwatch.Elapsed.TotalSeconds + " vterinach.");
     } 
 
     static void openShop()
@@ -131,7 +131,7 @@ class Program
 
         if (answer == "ano")
         {
-            Console.WriteLine("Máš" + Statistics.gold + "gold.");
+            Console.WriteLine("Máš " + Statistics.gold + " gold.");
             Console.WriteLine("Shop items:");
             foreach (string item in shop)
             {
