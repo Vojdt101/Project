@@ -176,7 +176,7 @@ class Program
 
         if (op == "ano")
         {
-
+System.Console.WriteLine("ahoj");
         }
     }
 
