@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 
 class Program
@@ -77,20 +76,15 @@ class Program
 
         foreach (string username in usernames)
         {
-            if (username == inputUsername)
+            if (username == inputUsername)          // zkontroluje jestli se shoduje username, jestli ne, zvetsi se index o 1 a jde to znovu, postupne pro vsechny jmena
             {
-                if (passwords[index] == inputPassword)
+                if (passwords[index] == inputPassword)      //jestli password na miste [index] se shoduje s input
                 {
-                    Console.WriteLine("Success!");
-                    found = true;
+                    found = true;                           //found se zmeni na true
                     Statistics.jmeno = inputUsername;
                 }
-                else
-                {
-                    Console.WriteLine("Fail!");
-                }
 
-                break; // stop searching after match
+                break;
             }
             index++;
         }
@@ -116,11 +110,11 @@ class Program
         //tady dejte vasi cast
 
 
-        Statistics.level++;
+        Statistics.level++;     //toto dejte u kazdyho levelu
 
         stopwatch.Stop();
-        Console.WriteLine("You have completed" + Statistics.level + " in {stopwatch.Elapsed.TotalSeconds} seconds");
-    }
+        Console.WriteLine("Dokoncil jsi " + Statistics.level + " levlu v " + stopwatch.Elapsed.TotalSeconds + " vterin.");
+    } 
 
     static void openShop()
     {
