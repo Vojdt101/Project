@@ -1,5 +1,4 @@
-﻿//using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 
 
 class Program
@@ -8,10 +7,10 @@ class Program
     static class Statistics
     {
         public static string jmeno = "";
-        public static int level = 1;
-        public static int health = 50;
+        public static int level = 0;
+        public static int health = 100;
         public static int strength = 10;
-        public static int gold = 100;
+        public static int gold = 0;
         public static List<string> inventory = new List<string>();
 
         public static void printOut()
@@ -24,9 +23,9 @@ class Program
             Console.WriteLine("Gold: " + gold);
             Console.WriteLine("Inventory:");
 
-            if (inventory.Count < 1)
+            if (inventory.Count < 1)                            //vypíše inventory
             {
-                Console.WriteLine("Nemas nic v inventari.");
+                Console.WriteLine("Nemáš nic v inventáři.");
             }
             else
             {
@@ -46,10 +45,15 @@ class Program
         {
             welcoming();
 
-            do
+            do                      //loopuje kola, dokud hráč umře
             {
                 gameLoop();
-                openShop();
+                if (Statistics.health > 0)
+                {
+                    openShop();
+                }
+
+
                 Statistics.printOut();
             } while (Statistics.health > 0);
 
@@ -68,7 +72,7 @@ class Program
 
     static bool userVerification()
     {
-        List<string> usernames = new List<string> { "Alice", "Bob", "Petr" };
+        List<string> usernames = new List<string> { "Alice", "Bob", "Petr" };       //zkontroluje login
         List<string> passwords = new List<string> { "pass1", "pass2", "pass3" };
         Console.Write("Zadej username: ");
         string inputUsername = Console.ReadLine();
@@ -81,9 +85,9 @@ class Program
 
         foreach (string username in usernames)
         {
-            if (username == inputUsername)          // zkontroluje jestli se shoduje username, jestli ne, zvetsi se index o 1 a jde to znovu, postupne pro vsechny jmena
+            if (username == inputUsername)          // zkontroluje jestli se shoduje username, jestli ne, zvětší se index o 1 a spustí se to znovu, postupně pro všechny jména
             {
-                if (passwords[index] == inputPassword)      //jestli password na miste [index] se shoduje s input
+                if (passwords[index] == inputPassword)      //jestli password na míste [index] se shoduje s input
                 {
                     found = true;                           //found se zmeni na true
                     Statistics.jmeno = inputUsername;
@@ -99,17 +103,16 @@ class Program
 
     static void welcoming()
     {
-        Console.WriteLine("Vítej!");
-        Console.WriteLine("Toto je bojová hra.");
+        Console.WriteLine("Vítej v Math Fights!");
         Console.WriteLine("Začínáš s 100 hp, až ti dojde hp, končí hra. ");
-        Console.WriteLine("Postupně budeš procházek levelama.");
+        Console.WriteLine("Postupně budeš procházet levelama.");
         Console.WriteLine("Hodně štěstí!");
     }
 
     static void gameLoop()
     {
-        Stopwatch stopwatch = new Stopwatch();
-        stopwatch.Start();
+        Stopwatch stopwatch = new Stopwatch();          
+        stopwatch.Start();                      //zacne novy stopwatch
 
 
         // promenne
@@ -118,7 +121,6 @@ class Program
         int vysledek1;
         int vysledek2;
         int vysledek3;
-        int vysledek4;
         string vstup;
         int odpoved;
         int enemyHP = 10;
@@ -129,57 +131,72 @@ class Program
 
 
 
-        // boj
+        // prubeh boje
 
         while (Statistics.health > 0)
         {
             kolo++;
-            enemyDMG = enemyDMG + (10 * kolo);
+            enemyDMG = enemyDMG + (7 * kolo); //přidá bonusový damage za každé kolo
             Random enemyHPplus = new Random();
-            enemyHP = enemyHP + enemyHPplus.Next(1, 31);
-            while (enemyHP > 0 && Statistics.health > 0)
+            enemyHP = enemyHP + enemyHPplus.Next(1, 21); //generuje hp nepřítele
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("kolo: " + kolo); //píše kolikáté kolo probíhá 
+            Console.ResetColor();
+            while (enemyHP > 0 && Statistics.health > 0) //opakuje dokud neumře hráč nebo nepřítel
             {
 
 
-                Console.WriteLine("zivoty nepritele: " + enemyHP);
-                Console.WriteLine("kolo: " + kolo);
-                Console.WriteLine("vyber utok, 1 - slaby utok (scitani), 2 - slaby utok (odcitani), 3 - silny utok (nasobeni), 4 - silny utok (deleni)");
+                Console.WriteLine("Životy neprítele: " + enemyHP); 
+                Console.WriteLine("Vyber útok, 1 - slabý útok (sčítání), 2 - slabý útok (odčítání), 3 - silný útok (násobení)");// hráč si vybírá možnost útoku
                 vybranyUtok = int.Parse(Console.ReadLine());
 
-                Random rnd1 = new Random();
-                int y = rnd1.Next(1, 100);
+                Random rnd1 = new Random(); //generace čísel pro příklady
+                int y = rnd1.Next(1, 21);
                 Random rnd2 = new Random();
-                int x = rnd2.Next(1, 100);
-                Random rnd3 = new Random();
-                int z = rnd3.Next(1, 10);
+                int x = rnd2.Next(1, 21);
+                
 
 
                 switch (vybranyUtok)
                 {
-                    case 1:
+                    case 1: //útok sčítání
 
-                        Console.WriteLine("vybral jsi slaby utok (scitani)");
-                        Console.WriteLine($"vypocitej priklad: {y} + {x} =");
+                        Console.WriteLine("Vybral jsi slabý útok (sčítání)");
+                        Console.WriteLine($"Vypočitej príklad: {y} + {x} =");
                         vstup = Console.ReadLine();
                         odpoved = int.Parse(vstup);
                         vysledek1 = x + y;
                         if (vysledek1 == odpoved)
                         {
                             Random rndDMG = new Random();
-                            damage = rndDMG.Next(5, 11);
-                            Console.WriteLine("uderil jsi damage " + damage);
+                            damage = rndDMG.Next(5, 11); //generuje damage hráče
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Úderil jsi: " + damage + " damage.");
+                            Console.ResetColor();
                             enemyHP = enemyHP - damage;
-                            Console.WriteLine("Zivoty nepritel " + enemyHP);
+                            Console.WriteLine("Životy neprítele: " + enemyHP);
+                            foreach (string Sword in Statistics.inventory)
+                            {
+                                damage++;
+                            }
+                            foreach (string Shield in Statistics.inventory)
+                            {
+                                enemyDMG--;
+                            }
+                            foreach (string Armour in Statistics.inventory)
+                            {
+                                enemyDMG--;
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("minul jsi, správný výsledek je " + vysledek1);
+                            Console.WriteLine("Minul jsi, správný výsledek je " + vysledek1);
                         }
                         break;
-                    case 2:
-
-                        Console.WriteLine("vybral jsi slaby utok (odcitani)");
-                        Console.WriteLine($"vypocitej priklad: {y} - {x} =");
+                        
+                    case 2: //útok odčítání
+                        Console.WriteLine("vybral jsi slabý útok (odčítání)");
+                        Console.WriteLine($"vypocítej príklad: {y} - {x} =");
                         vstup = Console.ReadLine();
                         odpoved = int.Parse(vstup);
                         vysledek2 = y - x;
@@ -187,19 +204,33 @@ class Program
                         {
                             Random rndDMG = new Random();
                             damage = rndDMG.Next(5, 11);
-                            Console.WriteLine("uderil jsi damage " + damage);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Úderil jsi: " + damage + " damage.");
+                            Console.ResetColor();
                             enemyHP = enemyHP - damage;
-                            Console.WriteLine("Zivoty nepritel " + enemyHP);
+                            Console.WriteLine("Životy neprÍtele: " + enemyHP);
+                            foreach (string Sword in Statistics.inventory)
+                            {
+                                damage++;
+                            }
+                            foreach (string Shield in Statistics.inventory)
+                            {
+                                enemyDMG--;
+                            }
+                            foreach (string Armour in Statistics.inventory)
+                            {
+                                enemyDMG--;
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("minul jsi, správný výsledek je " + vysledek2);
+                            Console.WriteLine("Minul jsi, správný výsledek je " + vysledek2);
                         }
                         break;
-                    case 3:
+                    case 3:  //útok násobení
 
-                        Console.WriteLine("vybral jsi silny utok(nasobeni)");
-                        Console.WriteLine($"vypocitej priklad: {y} * {x} =");
+                        Console.WriteLine("Vybral jsi silný útok(násobení)");
+                        Console.WriteLine($"Vypočítej príklad: {y} * {x} =");
                         vstup = Console.ReadLine();
                         odpoved = int.Parse(vstup);
                         vysledek3 = x * y;
@@ -207,44 +238,39 @@ class Program
                         {
                             Random rndDMG = new Random();
                             damage = rndDMG.Next(10, 21);
-                            Console.WriteLine("uderil jsi damage " + damage);
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Údeřil jsi damage " + damage);
+                            Console.ResetColor();
                             enemyHP = enemyHP - damage;
-                            Console.WriteLine("Zivoty nepritel " + enemyHP);
+                            Console.WriteLine("Životy neprítele: " + enemyHP);
+                            foreach (string Sword in Statistics.inventory)
+                            {
+                                damage++;
+                            }
+                            foreach (string Shield in Statistics.inventory)
+                            {
+                                enemyDMG--;
+                            }
+                            foreach (string Armour in Statistics.inventory)
+                            {
+                                enemyDMG--;
+                            }
                         }
                         else
                         {
-                            Console.WriteLine("minul jsi, správný výsledek je " + vysledek3);
+                            Console.WriteLine("Minul jsi, správný výsledek je " + vysledek3);
                         }
                         break;
-                    case 4:
-
-                        Console.WriteLine("vybral jsi silny utok(deleni)");
-                        Console.WriteLine($"vypocitej priklad: {y} / {z} =");
-                        vstup = Console.ReadLine();
-                        odpoved = int.Parse(vstup);
-                        vysledek4 = y / z;
-                        if (vysledek4 == odpoved)
-                        {
-                            Random rndDMG = new Random();
-                            damage = rndDMG.Next(5, 11);
-                            Console.WriteLine("uderil jsi damage " + damage);
-                            enemyHP = enemyHP - damage;
-                            Console.WriteLine("Zivoty nepritel " + enemyHP);
-                        }
-                        else
-                        {
-                            Console.WriteLine("minul jsi, správný výsledek je " + vysledek4);
-                        }
-                        break;
+                    
                     default:
                         Console.WriteLine("INVALID");
                         break;
                 }
-                if (enemyHP > 0)
+                if (enemyHP > 0)    // nepřítel útočí jen pokud žije
                 {
                     Random rndHit = new Random();
                     HitChance = rndHit.Next(0, 101);
-                    if (HitChance <= 70)
+                    if (HitChance <= 70) //nepřítel má 70% šanci na zásah hráče
                     {
                         Random rndeDMG = new Random();
                         enemyDmgEXTRA = rndeDMG.Next(5, 16);
@@ -254,46 +280,32 @@ class Program
                         {
                             Statistics.health = 0;
                         }
-                        Console.WriteLine("nepritel ti ubral " + enemyDMG + "zivotu");
-                        Console.WriteLine("zbyva ti " + Statistics.health + "zivotu");
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Nepritel ti ubral " + enemyDMG + "životů.");
+                        Console.ResetColor();
+                        Console.WriteLine("Zbýva ti " + Statistics.health + "životů.");
                     }
                     else
                     {
-                        Console.WriteLine("nepritel minul");
+                        Console.WriteLine("Nepritel minul.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("nepritel zemrel");
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Nepritel zemrel");
+                    Console.ResetColor();
                 }
-
-
-
-
-
-
-
             }
-
-
-
-
-
 
             Statistics.level++;
-            if (Statistics.health > 0)
-            {
-                openShop();
-            }
-            
+            Statistics.gold =+ 50;   // přidá goldy za dokončený level
         }
 
-
-             //toto dejte u kazdyho levelu
-
         stopwatch.Stop();
-        Console.WriteLine("Dokoncil jsi " + Statistics.level + " levly v " + stopwatch.Elapsed.TotalSeconds + " vterinach.");
+            Console.WriteLine("Dokoncil jsi " + Statistics.level + ". level v " + stopwatch.Elapsed.TotalSeconds + " vteřinách."); //napíše čas splnění levelu
     }
+
 
     static void openShop()
     {
@@ -305,82 +317,82 @@ class Program
             "3. Armour: 10 gold"
             };
 
-        Console.WriteLine("Chceš otevřít shop? ano/ne");
-        string answer = Console.ReadLine();
+            Console.WriteLine("Chceš otevřít shop? ano/ne");
+            string answer = Console.ReadLine();
 
-        if (answer == "ano")
-        {
-            Console.WriteLine("Máš " + Statistics.gold + " gold.");
-            Console.WriteLine("Shop items:");
-            foreach (string item in shop)
+            if (answer == "ano")
             {
-                Console.WriteLine(item);
-            }
-
-            Console.WriteLine("Vyber číslo položky k nákupu nebo zmáčkni 0, abys opustil shop:");
-            string choice = Console.ReadLine();
-
-            if (choice == "1")
-            {
-                if (Statistics.gold >= 30)
+                Console.WriteLine("Máš " + Statistics.gold + " gold.");
+                Console.WriteLine("Shop items:");
+                foreach (string item in shop)
                 {
-                    Statistics.gold -= 30;
-                    Console.WriteLine("Koupil jsi Sword! Zbylo ti " + Statistics.gold + " gold.");
-                    Statistics.inventory.Add("Sword");
+                    Console.WriteLine(item); //vypíše všechny položky v shopu
+                }
+
+                Console.WriteLine("Vyber číslo položky k nákupu nebo zmáčkni 0, abys opustil shop:");
+                string choice = Console.ReadLine();
+
+                if (choice == "1")
+                {
+                    if (Statistics.gold >= 30)
+                    {
+                        Statistics.gold -= 30;
+                        Console.WriteLine("Koupil jsi Sword! Zbylo ti " + Statistics.gold + " gold.");
+                        Statistics.inventory.Add("Sword"); //Sword se přidá do inventory
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nemáš dostatek gold!");
+                    }
+                }
+                else if (choice == "2")
+                {
+                    if (Statistics.gold >= 20)
+                    {
+                        Statistics.gold -= 20;
+                        Console.WriteLine("Koupil jsi Shield! Zbylo ti " + Statistics.gold + " gold.");
+                        Statistics.inventory.Add("Sheild"); //přidá se Shield do inventory
                 }
                 else
                 {
                     Console.WriteLine("Nemáš dostatek gold!");
                 }
-            }
-            else if (choice == "2")
-            {
-                if (Statistics.gold >= 20)
+                }
+                else if (choice == "3")
                 {
-                    Statistics.gold -= 20;
-                    Console.WriteLine("Koupil jsi Shield! Zbylo ti " + Statistics.gold + " gold.");
-                    Statistics.inventory.Add("Sheild");
+                    if (Statistics.gold >= 10)
+                    {
+                        Statistics.gold -= 10;
+                        Console.WriteLine("Koupil jsi Armour! Zbylo ti " + Statistics.gold + " gold.");
+                        Statistics.inventory.Add("Armour"); //přidá se Armour do inventory
+                    }
+                    else
+                    {
+                        Console.WriteLine("Nemáš dostatek gold!");
+                    }
+                }
+                else if (choice == "0")
+                {
+                    Console.WriteLine("Opouštíš shop.");
                 }
                 else
                 {
-                    Console.WriteLine("Nemáš dostatek gold!");
+                    Console.WriteLine("Neplatná volba.");
                 }
-            }
-            else if (choice == "3")
-            {
-                if (Statistics.gold >= 10)
-                {
-                    Statistics.gold -= 10;
-                    Console.WriteLine("Koupil jsi Armour! Zbylo ti " + Statistics.gold + " gold.");
-                    Statistics.inventory.Add("Armour");
-                }
-                else
-                {
-                    Console.WriteLine("Nemáš dostatek gold!");
-                }
-            }
-            else if (choice == "0")
-            {
-                Console.WriteLine("Opouštíš shop.");
             }
             else
             {
-                Console.WriteLine("Neplatná volba.");
+                Console.WriteLine("Shop byl zavřen.");
+            }
+
+            Console.WriteLine("Chceš si ještě něco koupit?");
+            string op = Console.ReadLine();
+
+            if (op == "ano")
+            {
+                openShop();
             }
         }
-        else
-        {
-            Console.WriteLine("Shop byl zavřen.");
-        }
 
-        Console.WriteLine("Chceš si ještě něco koupit?");
-        string op = Console.ReadLine();
 
-        if (op == "ano")
-        {
-            openShop();
-        }
     }
-
-
-}

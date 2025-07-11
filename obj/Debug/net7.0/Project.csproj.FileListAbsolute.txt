@@ -27,3 +27,17 @@ C:/Users/navsteva/Project/obj/Debug/net7.0/ref/Project.dll
 /Users/vojta/code/Project/obj/Debug/net7.0/Project.pdb
 /Users/vojta/code/Project/obj/Debug/net7.0/Project.genruntimeconfig.cache
 /Users/vojta/code/Project/obj/Debug/net7.0/ref/Project.dll
+C:\Users\navsteva\Desktop\Project\Project\bin\Debug\net7.0\Project.exe
+C:\Users\navsteva\Desktop\Project\Project\bin\Debug\net7.0\Project.deps.json
+C:\Users\navsteva\Desktop\Project\Project\bin\Debug\net7.0\Project.runtimeconfig.json
+C:\Users\navsteva\Desktop\Project\Project\bin\Debug\net7.0\Project.dll
+C:\Users\navsteva\Desktop\Project\Project\bin\Debug\net7.0\Project.pdb
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.AssemblyInfoInputs.cache
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.AssemblyInfo.cs
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.csproj.CoreCompileInputs.cache
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.dll
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\refint\Project.dll
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.pdb
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\Project.genruntimeconfig.cache
+C:\Users\navsteva\Desktop\Project\Project\obj\Debug\net7.0\ref\Project.dll
